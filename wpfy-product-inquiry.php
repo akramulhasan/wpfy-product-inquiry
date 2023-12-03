@@ -54,9 +54,11 @@ class WPFY_Product_Inquiry {
     public static function activate(){
         update_option('rewrite_rules', '');
     }
+
     public static function deactivate(){
         flush_rewrite_rules();
     }
+    
     public static function uninstall(){
 
     }
