@@ -33,14 +33,16 @@ class WPFY_Product_Inquiry {
     public function __construct() {
 
         /**
-         * Call Constants method
-         */
-        $this->define_constants();
-
-        /**
          * Check if WooCommerce is active
          */
         if ($this->is_woocommerce_active()) {
+            
+            /**
+             * Call Constants method
+             */
+            $this->define_constants();
+
+
             // Proceed with the activation
             register_activation_hook( __FILE__, array( 'WPFY_Product_Inquiry', 'activate' ) );
             register_deactivation_hook( __FILE__, array( 'WPFY_Product_Inquiry', 'deactivate' ) );
@@ -51,6 +53,11 @@ class WPFY_Product_Inquiry {
              */
 
              add_action('before_woocommerce_init', array($this, 'hpos_compatibility'));
+
+
+            //Include the wpfyInnquiryForm Class and instantiate
+            require_once(WPFY_PY_PATH . '/includes/class.wpfy-inquiry-form.php');
+            $wpfy_inquiry_form = new wpfyInquiryForm();
 
         } else {
             // Display a notice if WooCommerce is not active
