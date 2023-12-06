@@ -3,13 +3,13 @@
         <button class="wpfy-close-popup" onclick="closeInquiryPopup()">&times;</button>
         <form id="wpfy-inquiry-form">
             <label for="wpfy-inquiry-name"><?php esc_html_e('Name:', 'wpfypi'); ?></label>
-            <input type="text" name="wpfy-inquiry-name" id="wpfy-inquiry-name" required>
+            <input type="text" name="wpfy-inquiry-name" id="wpfy-inquiry-name" required><br>
 
             <label for="wpfy-inquiry-email"><?php esc_html_e('Email:', 'wpfypi'); ?></label>
-            <input type="email" name="wpfy-inquiry-email" id="wpfy-inquiry-email" required>
+            <input type="email" name="wpfy-inquiry-email" id="wpfy-inquiry-email" required><br>
 
             <label for="wpfy-inquiry-message"><?php esc_html_e('Message:', 'wpfypi'); ?></label>
-            <textarea name="wpfy-inquiry-message" id="wpfy-inquiry-message" rows="4" required></textarea>
+            <textarea name="wpfy-inquiry-message" id="wpfy-inquiry-message" rows="4" required></textarea><br>
 
             <button type="submit"><?php esc_html_e('Submit Inquiry', 'wpfypi'); ?></button>
         </form>

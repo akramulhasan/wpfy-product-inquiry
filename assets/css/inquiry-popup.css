@@ -19,6 +19,11 @@
     width: 70%;
     margin: 0 auto; /* Center the form horizontally */
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 70vh; /* Adjust the height as needed */
 }
 
 .wpfy-close-popup {
