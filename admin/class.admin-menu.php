@@ -20,7 +20,9 @@ if(!class_exists('wpfyAdminMenu')){
         }
     
         public function wpfy_product_inquiry_settings(){
-            echo 'This is a text';
+
+            //Include settings-page file
+            require_once(WPFY_PY_PATH . 'admin/settings-page.php');
         }
 
 
