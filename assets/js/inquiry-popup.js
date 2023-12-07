@@ -4,7 +4,8 @@ function closeInquiryPopup() {
 }
 
 function resetFormFields() {
-    $('#wpfy-inquiry-form')[0].reset();
+    jQuery('#wpfy-inquiry-form')[0].reset();
+
 }
 
 jQuery(document).ready(function ($) {

@@ -1,6 +1,17 @@
 <div id="wpfy-inquiry-popup" class="wpfy-popup" style="display: none;">
     <div class="wpfy-popup-content">
         <button class="wpfy-close-popup" onclick="closeInquiryPopup()">&times;</button>
+
+
+        <?php
+        // Get the current product title
+        $product_title = get_the_title();
+        ?>
+
+        <h4><?php esc_html_e('Submit your inquiry for', 'wpfypi'); ?> <span class="popup-item"><?php echo esc_html($product_title); ?></span></h4>
+
+
+
         <form id="wpfy-inquiry-form">
             <label for="wpfy-inquiry-name"><?php esc_html_e('Name:', 'wpfypi'); ?></label>
             <input type="text" name="wpfy-inquiry-name" id="wpfy-inquiry-name" required><br>
@@ -15,3 +26,4 @@
         </form>
     </div>
 </div>
+
