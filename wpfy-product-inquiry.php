@@ -59,6 +59,10 @@ class WPFY_Product_Inquiry {
             require_once(WPFY_PY_PATH . '/includes/class.wpfy-inquiry-form.php');
             $wpfy_inquiry_form = new wpfyInquiryForm();
 
+            //Include the wpfyAdminMenu Class and instantiate
+            require_once(WPFY_PY_PATH . '/admin/class.admin-menu.php');
+            $wpfy_admin_menu = new wpfyAdminMenu();
+
         } else {
             // Display a notice if WooCommerce is not active
             add_action('admin_notices', array($this, 'woocommerce_not_active_notice'));

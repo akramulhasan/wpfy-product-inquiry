@@ -1,7 +1,7 @@
 <?php
 if(!class_exists('wpfyInquiryForm')){
     
-    class wpfyInquiryForm{
+    class wpfyInquiryForm {
 
         public function __construct() {
 
