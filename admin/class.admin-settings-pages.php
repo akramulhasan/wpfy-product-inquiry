@@ -63,7 +63,12 @@ if(!class_exists('wpfyAdminSettingsPages')){
                 'Display Style', 
                 array($this, 'style_callback'),
                 'wpfy_pi_page2', 
-                'wpfy_pi_second_section'
+                'wpfy_pi_second_section',
+                array(
+                    'items' => array(
+                    'style-1',
+                    'style-2'
+                ))
             );
             
         }
@@ -127,22 +132,19 @@ if(!class_exists('wpfyAdminSettingsPages')){
          * 
          */
 
-         public function style_callback(){
+         public function style_callback( $args ){
             ?>
                 <select 
                 name="wpfy_pi_options[wpfy_pi_slider_style]" 
                 id="wpfy_pi_slider_style">
 
-                <option 
-                value="style-1"
+                <?php foreach ($args['items'] as $item) : ?>
+                    <option 
+                value="<?php echo esc_attr( $item ) ?>"
                 <?php 
-                    isset(self::$options['wpfy_pi_slider_style']) ? selected( 'style-1', self::$options['wpfy_pi_slider_style'], true ) : '';
-                ?>>Style 1</option>
-                <option 
-                value="style-2"
-                <?php 
-                    isset(self::$options['wpfy_pi_slider_style']) ? selected( 'style-2', self::$options['wpfy_pi_slider_style'], true ) : '';
-                ?>>Style 2</option>
+                    isset(self::$options['wpfy_pi_slider_style']) ? selected( $item, self::$options['wpfy_pi_slider_style'], true ) : '';
+                ?>><?php echo esc_html( ucfirst( $item ) ) ?></option>
+                <?php endforeach; ?>
             
                 </select>
             <?php
