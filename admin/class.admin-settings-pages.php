@@ -14,7 +14,7 @@ if(!class_exists('wpfyAdminSettingsPages')){
 
         public function admin_init(){
 
-            register_setting( 'wpfy_pi_group', 'wpfy_pi_options' );
+            register_setting( 'wpfy_pi_group', 'wpfy_pi_options', array($this, 'wpfy_pi_validate') );
 
 
             add_settings_section( 
@@ -45,7 +45,10 @@ if(!class_exists('wpfyAdminSettingsPages')){
                 'Slider Title', 
                 array($this, 'title_callback'),
                 'wpfy_pi_page2', 
-                'wpfy_pi_second_section'
+                'wpfy_pi_second_section',
+                array(
+                    'label_for' => 'wpfy_pi_slider_title'
+                )
             );
 
             // checkbox filed
@@ -54,7 +57,10 @@ if(!class_exists('wpfyAdminSettingsPages')){
                 'Display Bullet', 
                 array($this, 'bullet_callback'),
                 'wpfy_pi_page2', 
-                'wpfy_pi_second_section'
+                'wpfy_pi_second_section',
+                array(
+                    'label_for' => 'wpfy_pi_slider_bullet'
+                )
             );
 
             // select filed
@@ -66,9 +72,11 @@ if(!class_exists('wpfyAdminSettingsPages')){
                 'wpfy_pi_second_section',
                 array(
                     'items' => array(
-                    'style-1',
-                    'style-2'
-                ))
+                        'style-1',
+                        'style-2'
+                        ),
+                    'label_for' => 'wpfy_pi_slider_style'
+                )
             );
             
         }
@@ -93,7 +101,7 @@ if(!class_exists('wpfyAdminSettingsPages')){
          * 
          */
 
-         public function title_callback(){
+         public function title_callback( $args ){
             ?>
                 <input 
                 type="text" 
@@ -110,7 +118,7 @@ if(!class_exists('wpfyAdminSettingsPages')){
          * 
          */
 
-         public function bullet_callback(){
+         public function bullet_callback( $args ){
             ?>
                 <input 
                 type="checkbox" 
@@ -149,6 +157,40 @@ if(!class_exists('wpfyAdminSettingsPages')){
                 </select>
             <?php
          }
+
+         /**
+          * Register Settings callback description
+          */
+
+          public function wpfy_pi_validate( $input ){
+            $new_input = array();
+
+            foreach ($input as $key => $value) {
+                switch ($key) {
+                    case 'wpfy_pi_slider_title':
+                        if(empty($value)){
+                            add_settings_error( 'wpfy_pi_options', 'wpfy_pi_message', 'Field cannot be empty', 'error' );
+                            $value = 'Please type some text';
+                        }
+                        $new_input[$key] = sanitize_text_field( $value );
+                        break;
+
+                    case 'wpfy_pi_slider_bullet':
+                        $new_input[$key] = sanitize_text_field( $value );
+                        break;
+
+                    case 'wpfy_pi_slider_style':
+                        $new_input[$key] = sanitize_text_field( $value );
+                        break;
+                    
+                    default:
+                        $new_input[$key] = sanitize_text_field( $value );
+                        break;
+                }
+            }
+
+            return $new_input;
+          }
     }
 
 }

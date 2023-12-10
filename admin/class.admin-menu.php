@@ -21,8 +21,18 @@ if(!class_exists('wpfyAdminMenu')){
     
         public function wpfy_product_inquiry_settings(){
 
-            //Include settings-page file
-            require_once(WPFY_PY_PATH . 'admin/settings-page.php');
+            //Include settings-page file if user has proper role
+            if( !current_user_can( 'manage_options' ) ){
+                return; 
+            }
+
+            if( isset( $_GET['settings-updated'] ) ){
+                add_settings_error( 'wpfy_pi_options', 'wpfy_pi_message', 'Settings Saved', 'success' );
+            }
+
+            settings_errors( 'wpfy_pi_options' );
+
+            require_once( WPFY_PY_PATH . 'admin/settings-page.php' );
         }
 
 
