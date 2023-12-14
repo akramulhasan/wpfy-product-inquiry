@@ -59,9 +59,13 @@ class WPFY_Product_Inquiry {
             require_once(WPFY_PY_PATH . '/includes/class.wpfy-inquiry-form.php');
             $wpfy_inquiry_form = new wpfyInquiryForm();
 
-            //Include the wpfyInnquiryForm Class and instantiate
+            //Include the wpfyInnquiryApi Class and instantiate
             require_once(WPFY_PY_PATH . '/includes/class.wpfy-inquiry-api.php');
             $wpfy_inquiry_api = new wpfyInquiryApi();
+
+            //Include the wpfyInnquiryCpt Class and instantiate
+            require_once(WPFY_PY_PATH . '/includes/class.wpfy-inquiry-cpt.php');
+            $wpfy_inquiry_cpt = new wpfyInquiryCpt();
 
             //Include the wpfyAdminMenu Class and instantiate
             require_once(WPFY_PY_PATH . '/admin/class.admin-menu.php');
