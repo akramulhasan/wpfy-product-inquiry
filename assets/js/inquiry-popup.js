@@ -29,9 +29,16 @@ jQuery(document).ready(function ($) {
             data: JSON.stringify(formData),
             contentType: 'application/json',
             success: function(response) {
-                alert('Inquiry submitted successfully!');
-                closeInquiryPopup(); // Close the popup after submission
+
+            // create the success message markup
+            $('#wpfy-inquiry-success')
+                .html('Inquiry submitted successfully! We will get back to you soon.')
+                .show();
+            resetFormFields();
+            // Close the popup after a delay
+            setTimeout(closeInquiryPopup, 5000); // Close the popup after 5 seconds
             },
+
             error: function(response) {
                 console.error(response);
                 alert('There was a problem submitting your inquiry. Please try again.');

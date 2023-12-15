@@ -22,6 +22,9 @@
             <label for="wpfy-inquiry-message"><?php esc_html_e('Message:', 'wpfypi'); ?></label>
             <textarea name="wpfy-inquiry-message" id="wpfy-inquiry-message" rows="4" required></textarea><br>
 
+            <!-- Div to show form submission confirmation -->
+            <div id="wpfy-inquiry-success" style="display: none;" class="wpfy-inquiry-success"></div>
+
             <button type="submit"><?php esc_html_e('Submit Inquiry', 'wpfypi'); ?></button>
         </form>
     </div>
