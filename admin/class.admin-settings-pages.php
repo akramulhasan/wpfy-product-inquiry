@@ -74,60 +74,103 @@ if(!class_exists('wpfyAdminSettingsPages')){
             
         }
 
-
         /**
          * 
-         * Shortcode Field callback description
+         * Callback description of render_submission_table-1
          * 
          */
 
-         public function render_submission_table(){
-            // Get inquiries from the custom post type 'wpfypi_inquiry'
-            $args = array(
-                'post_type' => 'wpfypi_inquiry',
-                'posts_per_page' => -1,
-                'post_status' => 'any'
-            );
-            $inquiries = get_posts($args);
-            // echo '<pre>';
-            // print_r($inquiries);
-            // echo '</pre>';
-            ?>
-        
-            <table class="wp-list-table widefat fixed striped">
-                <thead>
-                    <tr>
-                        <th><?php _e('ID', 'wpfypi'); ?></th>
-                        <th><?php _e('Name', 'wpfypi'); ?></th>
-                        <th><?php _e('Email', 'wpfypi'); ?></th>
-                        <th><?php _e('Message Excerpt', 'wpfypi'); ?></th>
-                        <th><?php _e('Actions', 'wpfypi'); ?></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($inquiries as $inquiry): ?>
-                        <tr>
-                            <td><?php echo $inquiry->ID; ?></td>
-                            <td><?php echo $inquiry->post_title; ?></td>
-                            <td><?php echo get_post_meta($inquiry->ID, 'wpfypi_email', true); ?></td>
-                            <td><?php echo wp_trim_words($inquiry->post_content, 10); ?></td>
-                            <td>
-                                <button class="button view-details" data-inquiry-id="<?php echo $inquiry->ID; ?>">
-                                    <?php _e('View', 'wpfypi'); ?>
-                                </button>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-        
-            <!-- This div will hold the detailed inquiry information -->
-            <div id="inquiry-details"></div> <!-- Will some styling to position this element appropriately -->
-            
-        </div>
-        <?php
+         public function render_submission_table (){
+                    // Get the current ordering/order parameters
+                    $orderby = isset($_GET['orderby']) ? $_GET['orderby'] : 'id';
+                    $order = isset($_GET['order']) ? $_GET['order'] : 'asc';
 
+                    // Set the number of inquiries per page
+                    $per_page = 10;
+
+                    // Get the current page number
+                    $paged = isset($_GET['paged']) ? absint($_GET['paged']) : 1;
+
+                    // Calculate the offset based on the current page and inquiries per page
+                    $offset = ($paged - 1) * $per_page;
+
+                    // Get inquiries from the custom post type 'wpfypi_inquiry' with pagination
+                    $args = array(
+                        'post_type' => 'wpfypi_inquiry',
+                        'posts_per_page' => $per_page,
+                        'post_status' => 'any',
+                        'orderby' => $orderby,
+                        'order' => $order,
+                        'offset' => $offset,
+                    );
+                    $inquiries = get_posts($args);
+                    ?>
+
+                    <table class="wp-list-table widefat fixed striped">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <a href="<?php echo add_query_arg(array('orderby' => 'id', 'order' => $order)); ?>">
+                                        <?php _e('ID', 'wpfypi'); ?>
+                                    </a>
+                                </th>
+                                <th>
+                                    <a href="<?php echo add_query_arg(array('orderby' => 'title', 'order' => $order)); ?>">
+                                        <?php _e('Name', 'wpfypi'); ?>
+                                    </a>
+                                </th>
+                                <th>
+                                    <a href="<?php echo add_query_arg(array('orderby' => 'meta_value', 'meta_key' => 'wpfypi_email', 'order' => $order)); ?>">
+                                        <?php _e('Email', 'wpfypi'); ?>
+                                    </a>
+                                </th>
+                                <th><?php _e('Message Excerpt', 'wpfypi'); ?></th>
+                                <th><?php _e('Actions', 'wpfypi'); ?></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <?php foreach ($inquiries as $inquiry): ?>
+                            <tr>
+                                <td><?php echo $inquiry->ID; ?></td>
+                                <td><?php echo $inquiry->post_title; ?></td>
+                                <td><?php echo get_post_meta($inquiry->ID, 'wpfypi_email', true); ?></td>
+                                <td><?php echo wp_trim_words($inquiry->post_content, 10); ?></td>
+                                <td>
+                                    <button class="button view-details" data-inquiry-id="<?php echo $inquiry->ID; ?>">
+                                        <?php _e('View', 'wpfypi'); ?>
+                                    </button>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                        </tbody>
+                    </table>
+
+                    <!-- This div will hold the detailed inquiry information -->
+                    <div id="inquiry-details"></div> <!-- Will require some styling to position this element appropriately -->
+
+                    <?php
+                    // Get the total number of inquiries for pagination
+                    $total_inquiries = wp_count_posts('wpfypi_inquiry')->publish;
+
+                    // Calculate the total number of pages based on the total inquiries and inquiries per page
+                    $total_pages = ceil($total_inquiries / $per_page);
+
+                    // Get the current page URL without the paged parameter
+                    $current_url = remove_query_arg('paged');
+
+                    // Generate the pagination links with the correct query parameters
+                    $pagination_links = paginate_links(array(
+                        'base' => $current_url . '%_%',
+                        'format' => '&paged=%#%',
+                        'prev_text' => __('&laquo; Previous', 'wpfypi'),
+                        'next_text' => __('Next &raquo;', 'wpfypi'),
+                        'total' => $total_pages,
+                        'current' => $paged,
+                    ));
+
+                    echo '<div class="tablenav">' . $pagination_links . '</div>';
          }
+
 
 
         /**
