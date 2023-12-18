@@ -36,7 +36,7 @@ jQuery(document).ready(function ($) {
                 .show();
             resetFormFields();
             // Close the popup after a delay
-            setTimeout(closeInquiryPopup, 50000); // Close the popup after 5 seconds
+            setTimeout(closeInquiryPopup, 5000); // Close the popup after 5 seconds
             },
 
             error: function(response) {

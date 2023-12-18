@@ -19,8 +19,8 @@ if(!class_exists('wpfyAdminSettingsPages')){
 
             add_settings_section( 
                 'wpfy_pi_main_section', 
-                'How does it work?', 
-                null, 
+                'Here are the list of all submissions', 
+                array($this, 'render_submission_table'), 
                 'wpfy_pi_page1' 
             );
 
@@ -31,13 +31,6 @@ if(!class_exists('wpfyAdminSettingsPages')){
                 'wpfy_pi_page2' 
             );
 
-            add_settings_field( 
-                'wpfy_pi_shortcode', 
-                'Shortcode', 
-                array($this, 'shortcode_callback'),
-                'wpfy_pi_page1', 
-                'wpfy_pi_main_section'
-            );
 
             // text filed
             add_settings_field( 
@@ -88,10 +81,52 @@ if(!class_exists('wpfyAdminSettingsPages')){
          * 
          */
 
-         public function shortcode_callback(){
+         public function render_submission_table(){
+            // Get inquiries from the custom post type 'wpfypi_inquiry'
+            $args = array(
+                'post_type' => 'wpfypi_inquiry',
+                'posts_per_page' => -1,
+                'post_status' => 'any'
+            );
+            $inquiries = get_posts($args);
+            // echo '<pre>';
+            // print_r($inquiries);
+            // echo '</pre>';
             ?>
-                <span>Here will have some descirption of the field</span>
-            <?php
+        
+            <table class="wp-list-table widefat fixed striped">
+                <thead>
+                    <tr>
+                        <th><?php _e('ID', 'wpfypi'); ?></th>
+                        <th><?php _e('Name', 'wpfypi'); ?></th>
+                        <th><?php _e('Email', 'wpfypi'); ?></th>
+                        <th><?php _e('Message Excerpt', 'wpfypi'); ?></th>
+                        <th><?php _e('Actions', 'wpfypi'); ?></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($inquiries as $inquiry): ?>
+                        <tr>
+                            <td><?php echo $inquiry->ID; ?></td>
+                            <td><?php echo $inquiry->post_title; ?></td>
+                            <td><?php echo get_post_meta($inquiry->ID, 'wpfypi_email', true); ?></td>
+                            <td><?php echo wp_trim_words($inquiry->post_content, 10); ?></td>
+                            <td>
+                                <button class="button view-details" data-inquiry-id="<?php echo $inquiry->ID; ?>">
+                                    <?php _e('View', 'wpfypi'); ?>
+                                </button>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        
+            <!-- This div will hold the detailed inquiry information -->
+            <div id="inquiry-details"></div> <!-- Will some styling to position this element appropriately -->
+            
+        </div>
+        <?php
+
          }
 
 
