@@ -81,7 +81,7 @@
     outline: none;
 }
 
-.wpfy-popup-content button {
+.wpfy-popup-content button, #wpfy-inquiry-button {
     padding: 10px 15px;
     background-color: #007bff; /* Button background color */
     color: #fff; /* Button text color */
@@ -93,4 +93,9 @@
 
 .wpfy-popup-content button:hover {
     background-color: #0056b3; /* Adjust the hover background color */
+}
+
+#wpfy-inquiry-success {
+    margin-bottom: 30px;
+    color: #127d12;
 }
