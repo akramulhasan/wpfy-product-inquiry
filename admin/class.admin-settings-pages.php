@@ -83,7 +83,7 @@ if(!class_exists('wpfyAdminSettingsPages')){
          public function render_submission_table (){
                     // Get the current ordering/order parameters
                     $orderby = isset($_GET['orderby']) ? $_GET['orderby'] : 'id';
-                    $order = isset($_GET['order']) ? $_GET['order'] : 'asc';
+                    $order = isset($_GET['order']) ? $_GET['order'] : 'DESC';
 
                     // Set the number of inquiries per page
                     $per_page = 10;
@@ -124,6 +124,11 @@ if(!class_exists('wpfyAdminSettingsPages')){
                                         <?php _e('Email', 'wpfypi'); ?>
                                     </a>
                                 </th>
+                                <th>
+                                    <a href="<?php echo add_query_arg(array('orderby' => 'meta_value', 'meta_key' => 'wpfypi_product_name', 'order' => $order)); ?>">
+                                        <?php _e('Product', 'wpfypi'); ?>
+                                    </a>
+                                </th>
                                 <th><?php _e('Message Excerpt', 'wpfypi'); ?></th>
                                 <th><?php _e('Actions', 'wpfypi'); ?></th>
                             </tr>
@@ -134,6 +139,7 @@ if(!class_exists('wpfyAdminSettingsPages')){
                                 <td><?php echo $inquiry->ID; ?></td>
                                 <td><?php echo $inquiry->post_title; ?></td>
                                 <td><?php echo get_post_meta($inquiry->ID, 'wpfypi_email', true); ?></td>
+                                <td><?php echo get_post_meta($inquiry->ID, 'wpfypi_product_name', true); ?></td>
                                 <td><?php echo wp_trim_words($inquiry->post_content, 10); ?></td>
                                 <td>
                                     <button class="button view-details" data-inquiry-id="<?php echo $inquiry->ID; ?>">

@@ -28,6 +28,7 @@ if(!class_exists('wpfyInquiryApi')){
             
             // First, sanitize and validate incoming data
             $name = sanitize_text_field($request->get_param('name'));
+            $productName = sanitize_text_field($request->get_param('productName'));
             $email = sanitize_email($request->get_param('email'));
             $message = sanitize_textarea_field($request->get_param('message'));
         
@@ -50,6 +51,7 @@ if(!class_exists('wpfyInquiryApi')){
             // If submission was successful, save additional data as post meta
             if ($post_id != 0) {
                 update_post_meta($post_id, 'wpfypi_email', $email);
+                update_post_meta($post_id, 'wpfypi_product_name', $productName);
         
                 // Add any additional post meta as needed
                 // update_post_meta($post_id, 'meta_key', $meta_value);
@@ -82,6 +84,9 @@ if(!class_exists('wpfyInquiryApi')){
             }
             if ( ! isset( $request['message'] ) || empty( $request['message'] ) ) {
                 return new WP_Error( 'rest_missing_message', __( 'Missing message field', 'wpfypi' ), array( 'status' => 400 ) );
+            }
+            if ( ! isset( $request['productName'] ) || empty( $request['productName'] ) ) {
+                return new WP_Error( 'rest_missing_message', __( 'Missing product title', 'wpfypi' ), array( 'status' => 400 ) );
             }
 
             // Optional: Add additional validation for email

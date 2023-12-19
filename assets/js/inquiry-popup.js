@@ -19,7 +19,8 @@ jQuery(document).ready(function ($) {
         var formData = {
             'name': $('#wpfy-inquiry-name').val(),
             'email': $('#wpfy-inquiry-email').val(),
-            'message': $('#wpfy-inquiry-message').val()
+            'message': $('#wpfy-inquiry-message').val(),
+            'productName': $('#wpfy-inquiry-product-name').val(),
         };
 
         // Submit form data to the REST API

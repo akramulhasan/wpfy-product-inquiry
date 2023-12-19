@@ -22,6 +22,8 @@
             <label for="wpfy-inquiry-message"><?php esc_html_e('Message:', 'wpfypi'); ?></label>
             <textarea name="wpfy-inquiry-message" id="wpfy-inquiry-message" rows="4" required></textarea><br>
 
+            <input type="hidden" name="wpfy-inquiry-product-name" id="wpfy-inquiry-product-name" value="<?php echo $product_title; ?>">
+
             <!-- Div to show form submission confirmation -->
             <div id="wpfy-inquiry-success" style="display: none;" class="wpfy-inquiry-success"></div>
 
