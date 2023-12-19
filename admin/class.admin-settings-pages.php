@@ -9,6 +9,11 @@ if(!class_exists('wpfyAdminSettingsPages')){
 
             self::$options = get_option( 'wpfy_pi_options' );
             add_action('admin_init', array($this, 'admin_init'));
+
+            // Add AJAX action hooks for details view
+
+            add_action('wp_ajax_get_inquiry_details', array($this, 'get_inquiry_details'));
+            add_action('wp_ajax_nopriv_get_inquiry_details', array($this, 'get_inquiry_details'));
         }
 
 
@@ -275,6 +280,30 @@ if(!class_exists('wpfyAdminSettingsPages')){
 
             return $new_input;
           }
+
+          /**
+           * Description of get_inquiry_details method
+           */
+
+          public function get_inquiry_details() {
+            // Verify nonce for security
+            if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'get_inquiry_details_nonce')) {
+                wp_send_json_error('Invalid nonce');
+            }
+        
+            $inquiryId = isset($_POST['inquiry_id']) ? absint($_POST['inquiry_id']) : 0;
+        
+            // Fetch detailed inquiry information
+            $inquiryDetails = get_post($inquiryId);
+        
+            // You can customize the HTML structure based on your detailed inquiry information
+            $html = '<p>ID: ' . $inquiryDetails->ID . '</p>';
+            $html .= '<p>Name: ' . $inquiryDetails->post_title . '</p>';
+            // Add more details...
+        
+            wp_send_json_success($html);
+            wp_die();
+        }
     }
 
 }
