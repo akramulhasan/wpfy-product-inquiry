@@ -5,6 +5,9 @@ if(!class_exists('wpfyAdminMenu')){
 
         public function __construct(){
             add_action('admin_menu', array($this, 'add_menu'));
+
+            // Enqueue scripts and styles
+            add_action('admin_enqueue_scripts', array($this, 'enqueue_scripts_styles'));
         }
 
         public function add_menu(){
@@ -35,6 +38,13 @@ if(!class_exists('wpfyAdminMenu')){
             require_once( WPFY_PY_PATH . 'admin/settings-page.php' );
         }
 
+        /**
+         * Enqueue Scripts and Styles Method
+         */
+        public function enqueue_scripts_styles() {
+            wp_enqueue_script('wpfy-inquiry-popup-js', WPFY_PY_URL . 'admin/assets/inquiry.js', array('jquery'), '1.0.0', true);
+            //wp_enqueue_style('wpfy-inquiry-popup-css', WPFY_PY_URL . 'assets/css/inquiry-popup.css');
+        }
 
 
     }

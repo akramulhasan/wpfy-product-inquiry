@@ -74,6 +74,7 @@ class WPFY_Product_Inquiry {
             //Include the wpfyAdminSettingsPages Class and instantiate
             require_once(WPFY_PY_PATH . '/admin/class.admin-settings-pages.php');
             $wpfy_admin_settings_pages = new wpfyAdminSettingsPages();
+            
 
         } else {
             // Display a notice if WooCommerce is not active
