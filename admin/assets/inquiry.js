@@ -1,27 +1,39 @@
 jQuery(document).ready(function($) {
     $('.view-details').on('click', function(event) {
-
-        event.preventDefault(); // Prevent the default form submission behavior
+        event.preventDefault();
 
         var inquiryId = $(this).data('inquiry-id');
-        console.log(inquiryId);
+        var nonce = ajax_object.nonce;
 
-        // Here we would make an AJAX call to the above PHP function
         $.ajax({
-            url: ajaxurl, // This is a global variable available in the admin
+            url: ajaxurl,
             type: 'POST',
             data: {
                 action: 'get_inquiry_details',
-                nonce: '<?php echo wp_create_nonce("get_inquiry_details_nonce"); ?>',
+                nonce: nonce,
                 inquiry_id: inquiryId,
             },
             success: function(response) {
-                // Populate the details div with the response
-                $('#inquiry-details').html(response).show();
+                // Create a modal and append the response HTML
+                var modalHtml = '<div class="modal">';
+                modalHtml += '<div class="modal-content">' + response + '</div>';
+                modalHtml += '<button class="close-modal">Close</button>';
+                modalHtml += '</div>';
+
+                // Append the modal to the body
+                $('body').append(modalHtml);
+
+                // Show the modal
+                $('.modal').show();
             },
             error: function() {
                 alert('Error retrieving details.');
             }
         });
+    });
+
+    // Close modal on clicking the close button
+    $('body').on('click', '.close-modal', function() {
+        $('.modal').remove();
     });
 });

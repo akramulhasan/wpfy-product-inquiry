@@ -42,8 +42,9 @@ if(!class_exists('wpfyAdminMenu')){
          * Enqueue Scripts and Styles Method
          */
         public function enqueue_scripts_styles() {
+            wp_enqueue_style('wpfy-inquiry-css', WPFY_PY_URL . 'admin/assets/inquiry.css');
             wp_enqueue_script('wpfy-inquiry-popup-js', WPFY_PY_URL . 'admin/assets/inquiry.js', array('jquery'), '1.0.0', true);
-            //wp_enqueue_style('wpfy-inquiry-popup-css', WPFY_PY_URL . 'assets/css/inquiry-popup.css');
+            wp_localize_script('wpfy-inquiry-popup-js', 'ajax_object', array('nonce' => wp_create_nonce('get_inquiry_details_nonce')));
         }
 
 
