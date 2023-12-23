@@ -297,11 +297,20 @@ if(!class_exists('wpfyAdminSettingsPages')){
             $inquiryDetails = get_post($inquiryId);
         
             // You can customize the HTML structure based on your detailed inquiry information
-            $html = '<p>ID: ' . $inquiryDetails->ID . '</p>';
-            $html .= '<p>Name: ' . $inquiryDetails->post_title . '</p>';
-            // Add more details...
+            // $html = '<p>ID: ' . $inquiryDetails->ID . '</p>';
+            // $html .= '<p>Name: ' . $inquiryDetails->post_title . '</p>';
+            // $html .= '<p>Email: ' . get_post_meta($inquiryDetails->ID, 'wpfypi_email', true) . '</p>';
+            // $html .= '<p>Product: ' . get_post_meta($inquiryDetails->ID, 'wpfypi_product_name', true) . '</p>';
+
+            $dataObj = [
+                'id' => 123,
+                'name' => 'Akramul Hasan',
+                'age' => 34,
+            ];
+ 
         
-            wp_send_json_success($html);
+             wp_send_json_success($dataObj);
+            //wp_send_json_success(array('html' => $html));
             wp_die();
         }
     }

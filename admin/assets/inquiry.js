@@ -15,8 +15,12 @@ jQuery(document).ready(function($) {
             },
             success: function(response) {
                 // Create a modal and append the response HTML
+console.log(response);
+                $html = '<p>ID: ' +'I love you'+ '</p>';
+                $html += '<p>Name: ' + 'I love you too' + '</p>';
+
                 var modalHtml = '<div class="modal">';
-                modalHtml += '<div class="modal-content">' + response + '</div>';
+                modalHtml += '<div class="modal-content">' + response.data + '</div>';
                 modalHtml += '<button class="close-modal">Close</button>';
                 modalHtml += '</div>';
 
