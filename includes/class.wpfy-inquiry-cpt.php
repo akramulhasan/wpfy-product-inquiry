@@ -40,13 +40,13 @@ if(!class_exists('wpfyInquiryCpt')){
                 'labels'                => $labels,
                 'public'                => false, // It's not intended to be publicly queryable
                 'publicly_queryable'    => false, // Should not be publicly queryable
-                'show_ui'               => true, // Show in admin UI
-                'show_in_menu'          => true, // Show in the admin menu
+                'show_ui'               => false, // Show in admin UI
+                'show_in_menu'          => false, // Show in the admin menu
                 'query_var'             => true,
                 'rewrite'               => array('slug' => 'inquiry'),
                 'capability_type'       => 'post',
-                'has_archive'           => false, // No need for archive page
-                'hierarchical'          => false,
+                'has_archive'           => true, // No need for archive page
+                'hierarchical'          => true,
                 'menu_position'         => null,
                 'supports'              => array('title', 'editor'), // Assuming you want title and message body
                 'show_in_rest'          => true, // If you wish to expose this CPT to the REST API

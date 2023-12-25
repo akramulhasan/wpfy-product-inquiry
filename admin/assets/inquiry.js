@@ -14,21 +14,31 @@ jQuery(document).ready(function($) {
                 inquiry_id: inquiryId,
             },
             success: function(response) {
-                // Create a modal and append the response HTML
-console.log(response);
-                $html = '<p>ID: ' +'I love you'+ '</p>';
-                $html += '<p>Name: ' + 'I love you too' + '</p>';
+                if (response.success) {
+                    // Extract data object from the response
+                    var dataObj = response.data;
 
-                var modalHtml = '<div class="modal">';
-                modalHtml += '<div class="modal-content">' + response.data + '</div>';
-                modalHtml += '<button class="close-modal">Close</button>';
-                modalHtml += '</div>';
+                    // Build a 2-column table in HTML
+                    var tableHtml = '<table class="two-column-table">';
+                    $.each(dataObj, function(key, value) {
+                        tableHtml += '<tr><td>' + key + '</td><td>' + value + '</td></tr>';
+                    });
+                    tableHtml += '</table>';
 
-                // Append the modal to the body
-                $('body').append(modalHtml);
+                    // Create a modal and append the table HTML
+                    var modalHtml = '<div class="modal">';
+                    modalHtml += '<div class="modal-content">' + tableHtml + '</div>';
+                    modalHtml += '<button class="close-modal">Close</button>';
+                    modalHtml += '</div>';
 
-                // Show the modal
-                $('.modal').show();
+                    // Append the modal to the body
+                    $('body').append(modalHtml);
+
+                    // Show the modal
+                    $('.modal').show();
+                } else {
+                    alert('Error retrieving details.');
+                }
             },
             error: function() {
                 alert('Error retrieving details.');
