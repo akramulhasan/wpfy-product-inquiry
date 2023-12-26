@@ -279,6 +279,8 @@ if (!class_exists('wpfyAdminSettingsPages')) {
 
         /**
          * Description of get_inquiry_details method
+         * This method receives data sent by Ajax from 'View' click
+         * This method sent back the 'details_url' with dedicated page slug + inquiry_id
          */
 
         public function get_inquiry_details()
@@ -290,27 +292,8 @@ if (!class_exists('wpfyAdminSettingsPages')) {
 
             $inquiryId = isset($_POST['inquiry_id']) ? absint($_POST['inquiry_id']) : 0;
 
-            // Fetch detailed inquiry information
-            $inquiryDetails = get_post($inquiryId);
-
-            // You can customize the HTML structure based on your detailed inquiry information
-            // $html = '<p>ID: ' . $inquiryDetails->ID . '</p>';
-            // $html .= '<p>Name: ' . $inquiryDetails->post_title . '</p>';
-            // $html .= '<p>Email: ' . get_post_meta($inquiryDetails->ID, 'wpfypi_email', true) . '</p>';
-            // $html .= '<p>Product: ' . get_post_meta($inquiryDetails->ID, 'wpfypi_product_name', true) . '</p>';
-
-            // $dataObj = [
-            //     'id' => $inquiryDetails->ID,
-            //     'name' => $inquiryDetails->post_title,
-            //     'message' => $inquiryDetails->post_content,
-            //     'email' => get_post_meta($inquiryDetails->ID, 'wpfypi_email', true),
-            //     'product' => get_post_meta($inquiryDetails->ID, 'wpfypi_product_name', true),
-            //     //'message' => $inquiryDetails->the_content()
-            // ];
-
             // Build the page url where the details of the submission available
             $details_url = add_query_arg(array('page' => 'inquiry-details', 'inquiry_id' => $inquiryId), admin_url('admin.php'));
-
 
             wp_send_json_success(array('details_url' => $details_url));
 

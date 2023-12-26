@@ -16,7 +16,7 @@ jQuery(document).ready(function ($) {
       success: function (response) {
         if (response.success) {
           // Redirect to the custom settings page URL with the inquiry ID as a parameter
-          //window.location.href = response.data.details_url;
+          window.location.href = response.data.details_url;
         } else {
           alert("Error retrieving details.");
         }

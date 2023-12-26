@@ -36,12 +36,8 @@ if (!class_exists('wpfyAdminMenu')) {
             );
         }
 
-        public function render_inquiry_details_page()
-        {
-            echo 'run some dummy text';
-        }
 
-        public function render_inquiry_details_page2()
+        public function render_inquiry_details_page()
         {
             // Fetch inquiry ID from the URL parameter
             $inquiryId = isset($_GET['inquiry_id']) ? absint($_GET['inquiry_id']) : 0;
@@ -57,7 +53,6 @@ if (!class_exists('wpfyAdminMenu')) {
                 <p>Name: <?php echo esc_html($inquiryDetails->post_title); ?></p>
                 <p>Email: <?php echo esc_html(get_post_meta($inquiryDetails->ID, 'wpfypi_email', true)); ?></p>
                 <p>Product: <?php echo esc_html(get_post_meta($inquiryDetails->ID, 'wpfypi_product_name', true)); ?></p>
-                <!-- Add more details... -->
             </div>
 <?php
         }
