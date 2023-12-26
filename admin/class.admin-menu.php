@@ -23,6 +23,43 @@ if (!class_exists('wpfyAdminMenu')) {
                 'dashicons-media-text',
                 81
             );
+
+            // Admin Menu for holding a page to show inquiry details ( this will be hidden from the menu)
+            add_menu_page(
+                'Inquiry Details',
+                'Inquiry Details',
+                'manage_options',
+                'inquiry-details',
+                array($this, 'render_inquiry_details_page'),
+                null,
+                null
+            );
+        }
+
+        public function render_inquiry_details_page()
+        {
+            echo 'run some dummy text';
+        }
+
+        public function render_inquiry_details_page2()
+        {
+            // Fetch inquiry ID from the URL parameter
+            $inquiryId = isset($_GET['inquiry_id']) ? absint($_GET['inquiry_id']) : 0;
+
+            // Fetch detailed inquiry information
+            $inquiryDetails = get_post($inquiryId);
+
+            // Display the details as needed
+?>
+            <div class="wrap">
+                <h1>Inquiry Details</h1>
+                <p>ID: <?php echo $inquiryDetails->ID; ?></p>
+                <p>Name: <?php echo esc_html($inquiryDetails->post_title); ?></p>
+                <p>Email: <?php echo esc_html(get_post_meta($inquiryDetails->ID, 'wpfypi_email', true)); ?></p>
+                <p>Product: <?php echo esc_html(get_post_meta($inquiryDetails->ID, 'wpfypi_product_name', true)); ?></p>
+                <!-- Add more details... -->
+            </div>
+<?php
         }
 
         public function wpfy_product_inquiry_settings()

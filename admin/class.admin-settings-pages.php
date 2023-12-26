@@ -299,17 +299,21 @@ if (!class_exists('wpfyAdminSettingsPages')) {
             // $html .= '<p>Email: ' . get_post_meta($inquiryDetails->ID, 'wpfypi_email', true) . '</p>';
             // $html .= '<p>Product: ' . get_post_meta($inquiryDetails->ID, 'wpfypi_product_name', true) . '</p>';
 
-            $dataObj = [
-                'id' => $inquiryDetails->ID,
-                'name' => $inquiryDetails->post_title,
-                'message' => $inquiryDetails->post_content,
-                'email' => get_post_meta($inquiryDetails->ID, 'wpfypi_email', true),
-                'product' => get_post_meta($inquiryDetails->ID, 'wpfypi_product_name', true),
-                //'message' => $inquiryDetails->the_content()
-            ];
+            // $dataObj = [
+            //     'id' => $inquiryDetails->ID,
+            //     'name' => $inquiryDetails->post_title,
+            //     'message' => $inquiryDetails->post_content,
+            //     'email' => get_post_meta($inquiryDetails->ID, 'wpfypi_email', true),
+            //     'product' => get_post_meta($inquiryDetails->ID, 'wpfypi_product_name', true),
+            //     //'message' => $inquiryDetails->the_content()
+            // ];
+
+            // Build the page url where the details of the submission available
+            $details_url = add_query_arg(array('page' => 'inquiry-details', 'inquiry_id' => $inquiryId), admin_url('admin.php'));
 
 
-            wp_send_json_success($dataObj);
+            wp_send_json_success(array('details_url' => $details_url));
+
             wp_die();
         }
     }
