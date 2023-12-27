@@ -36,7 +36,6 @@ if (!class_exists('wpfyAdminMenu')) {
             );
         }
 
-
         public function render_inquiry_details_page()
         {
             // Fetch inquiry ID from the URL parameter
