@@ -46,12 +46,13 @@ if (!class_exists('wpfyAdminMenu')) {
 
             // Display the details as needed
 ?>
-            <div class="wrap">
+            <div class="wrap inquiry-details-wrap">
                 <h1>Inquiry Details</h1>
-                <p>ID: <?php echo $inquiryDetails->ID; ?></p>
-                <p>Name: <?php echo esc_html($inquiryDetails->post_title); ?></p>
-                <p>Email: <?php echo esc_html(get_post_meta($inquiryDetails->ID, 'wpfypi_email', true)); ?></p>
-                <p>Product: <?php echo esc_html(get_post_meta($inquiryDetails->ID, 'wpfypi_product_name', true)); ?></p>
+                <div class="inquiry-details">
+                    <p><strong>Name:</strong> <?php echo esc_html($inquiryDetails->post_title); ?></p>
+                    <p><strong>Email:</strong> <?php echo esc_html(get_post_meta($inquiryDetails->ID, 'wpfypi_email', true)); ?></p>
+                    <p><strong>Product:</strong> <?php echo esc_html(get_post_meta($inquiryDetails->ID, 'wpfypi_product_name', true)); ?></p>
+                </div>
             </div>
 <?php
         }

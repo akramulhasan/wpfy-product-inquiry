@@ -1,22 +1,25 @@
-/* Style for the modal container */
-.modal {
-  display: none;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: white;
+/* CSS Styles for Inquiry Details */
+.inquiry-details-wrap {
+  max-width: 850px;
+  margin: 20px auto;
   padding: 20px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  z-index: 1000;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Style for the close button */
-.close-modal {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  cursor: pointer;
+.inquiry-details {
+  margin-top: 20px;
+}
+
+.inquiry-details p {
+  margin-bottom: 10px;
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 600px) {
+  .inquiry-details-wrap {
+    padding: 10px;
+  }
 }
 
 #toplevel_page_inquiry-details {
