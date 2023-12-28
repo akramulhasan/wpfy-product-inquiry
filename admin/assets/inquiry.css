@@ -25,3 +25,18 @@
 #toplevel_page_inquiry-details {
   display: none;
 }
+
+/**
+*
+*Email Composer
+*
+*/
+.email-composer-section {
+  max-height: 0;
+  overflow-x: scroll;
+  transition: max-height 0.3s ease-out; /* Adjust the duration and easing as needed */
+}
+
+.email-composer-section.open {
+  max-height: 650px; /* Adjust the maximum height as needed */
+}

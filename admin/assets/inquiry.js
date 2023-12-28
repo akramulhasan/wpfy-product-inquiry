@@ -27,8 +27,9 @@ jQuery(document).ready(function ($) {
     });
   });
 
-  // Close modal on clicking the close button
-  $("body").on("click", ".close-modal", function () {
-    $(".modal").remove();
+  // Handle click event for "Send Email Reply" button
+  $(".send-email-reply").on("click", function () {
+    // Toggle the "open" class on the email composer section
+    $(".email-composer-section").toggleClass("open");
   });
 });
