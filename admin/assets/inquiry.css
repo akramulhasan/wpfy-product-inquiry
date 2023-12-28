@@ -40,3 +40,6 @@
 .email-composer-section.open {
   max-height: 650px; /* Adjust the maximum height as needed */
 }
+.email-submit {
+  margin-top: 20px !important;
+}
