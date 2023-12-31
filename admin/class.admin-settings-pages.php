@@ -12,10 +12,47 @@ if (!class_exists('wpfyAdminSettingsPages')) {
             self::$options = get_option('wpfy_pi_options');
             add_action('admin_init', array($this, 'admin_init'));
 
+            //add_action('admin_post_send_email_reply', array($this, 'send_email_reply'));
+
+
             // Add AJAX action hooks for details view
 
             add_action('wp_ajax_get_inquiry_details', array($this, 'get_inquiry_details'));
             add_action('wp_ajax_nopriv_get_inquiry_details', array($this, 'get_inquiry_details'));
+        }
+
+        public function send_email_reply()
+        {
+            // Check nonce for security
+            if (!isset($_POST['compose_email_nonce']) || !wp_verify_nonce($_POST['compose_email_nonce'], 'compose_email_nonce')) {
+                wp_die('Invalid nonce');
+            }
+
+            // Get the inquiry ID from the query parameters
+            $inquiryId = isset($_GET['inquiry_id']) ? absint($_GET['inquiry_id']) : 0;
+
+            // Get the email body from the form submission
+            $email_body = isset($_POST['email_body']) ? $_POST['email_body'] : '';
+
+            // Get the email address of the user who submitted the inquiry
+            $user_email = get_post_meta($inquiryId, 'wpfypi_email', true);
+
+            // Prepare email subject
+            $subject = 'Reply to Your Inquiry';
+
+            // Send the email using wp_mail()
+            $sent = wp_mail($user_email, $subject, $email_body);
+
+            // Check if the email was sent successfully
+            if ($sent) {
+                // Redirect back to the inquiry details page with a success message
+                wp_redirect(admin_url('admin.php?page=inquiry-details&inquiry_id=' . $inquiryId . '&email_sent=true'));
+            } else {
+                // Redirect back to the inquiry details page with an error message
+                wp_redirect(admin_url('admin.php?page=inquiry-details&inquiry_id=' . $inquiryId . '&email_sent=false'));
+            }
+
+            exit;
         }
 
 
