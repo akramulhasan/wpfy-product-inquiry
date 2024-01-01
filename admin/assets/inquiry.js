@@ -32,4 +32,46 @@ jQuery(document).ready(function ($) {
     // Toggle the "open" class on the email composer section
     $(".email-composer-section").toggleClass("open");
   });
+
+  /**
+   *
+   * Manage Email Submission
+   *
+   */
+
+  $(".email-submit").on("click", function (event) {
+    event.preventDefault();
+
+    var inquiryId = $(this).data("inquiry-id");
+    var nonce = ajax_object.nonce;
+
+    // Open the email composer modal
+    openEmailComposer(inquiryId, nonce);
+    console.log("above", inquiryId, nonce);
+  });
+
+  function openEmailComposer(inquiryId, nonce) {
+    console.log(inquiryId);
+    // Here we would make an AJAX call to the PHP function handling email composition
+    // $.ajax({
+    //   url: ajaxurl,
+    //   type: "POST",
+    //   data: {
+    //     action: "compose_email",
+    //     nonce: nonce,
+    //     inquiry_id: inquiryId,
+    //   },
+    //   success: function (response) {
+    //     if (response.success) {
+    //       // Populate the details div with the response
+    //       $("#email-composer").html(response.data).show();
+    //     } else {
+    //       alert("Error opening email composer.");
+    //     }
+    //   },
+    //   error: function () {
+    //     alert("Error opening email composer.");
+    //   },
+    // });
+  }
 });

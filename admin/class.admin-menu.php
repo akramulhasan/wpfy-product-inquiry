@@ -68,7 +68,7 @@ if (!class_exists('wpfyAdminMenu')) {
                         );
                         wp_editor('', 'email_body', $settings);
                         ?>
-                        <input type="submit" class="button email-submit" value="Send Email">
+                        <input type="submit" class="button email-submit" data-inquiry-id="<?php echo $inquiryDetails->ID; ?>" value="Send Email">
                     </form>
                 </div>
             </div>
