@@ -47,31 +47,31 @@ jQuery(document).ready(function ($) {
 
     // Open the email composer modal
     openEmailComposer(inquiryId, nonce);
-    console.log("above", inquiryId, nonce);
   });
 
   function openEmailComposer(inquiryId, nonce) {
-    console.log(inquiryId);
     // Here we would make an AJAX call to the PHP function handling email composition
-    // $.ajax({
-    //   url: ajaxurl,
-    //   type: "POST",
-    //   data: {
-    //     action: "compose_email",
-    //     nonce: nonce,
-    //     inquiry_id: inquiryId,
-    //   },
-    //   success: function (response) {
-    //     if (response.success) {
-    //       // Populate the details div with the response
-    //       $("#email-composer").html(response.data).show();
-    //     } else {
-    //       alert("Error opening email composer.");
-    //     }
-    //   },
-    //   error: function () {
-    //     alert("Error opening email composer.");
-    //   },
-    // });
+
+    $.ajax({
+      url: ajaxurl,
+      type: "POST",
+      data: {
+        action: "get_inquiry_details",
+        nonce: nonce,
+        inquiry_id: inquiryId,
+      },
+      success: function (response) {
+        if (response.success) {
+          // Populate the details div with the response
+          // $("#email-composer").html(response.data).show();
+          console.log(response);
+        } else {
+          alert("Error opening email composer.");
+        }
+      },
+      error: function () {
+        alert("Error opening email composerrrrrrrrr.");
+      },
+    });
   }
 });

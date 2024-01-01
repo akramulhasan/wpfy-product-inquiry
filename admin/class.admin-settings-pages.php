@@ -336,5 +336,35 @@ if (!class_exists('wpfyAdminSettingsPages')) {
 
             wp_die();
         }
+
+
+
+        /**
+         * Description of compose_email method
+         * This method receives data sent by Ajax from 'Send Email- [email-submit]' click
+         * 
+         */
+
+        public function compose_email()
+        {
+            // Verify nonce for security
+            // if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'compose_email_nonce')) {
+            //     wp_send_json_error('Invalid nonce');
+            // }
+            error_log('AJAX request received.');
+            $inquiryId = isset($_POST['inquiry_id']) ? absint($_POST['inquiry_id']) : 0;
+
+            // You can customize the HTML structure based on your email composition needs
+            // $html = '<div class="email-composer-content">';
+            // $html .= '<label for="email-body">Email Body:</label>';
+            // $html .= '<textarea id="email-body" name="email_body" rows="5"></textarea>';
+            // $html .= '<button class="submit-email-button">Submit</button>';
+            // $html .= '</div>';
+
+            wp_send_json_success(array('details_url' => 'just-for-test'));
+            // wp_send_json_error('Error opening email composer from callback php file');
+
+            wp_die();
+        }
     }
 }
