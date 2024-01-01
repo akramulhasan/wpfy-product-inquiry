@@ -43,22 +43,28 @@ jQuery(document).ready(function ($) {
     event.preventDefault();
 
     var inquiryId = $(this).data("inquiry-id");
-    var nonce = ajax_object.nonce;
+    var nonce = $(this).data("nonce");
+
+    // Retrieve the content of the wp_editor
+    //var emailBody = tinyMCE.get("email_body").getContent(); // Use tinyMCE to get content
+
+    var emailBody = "This is the content of the email body";
 
     // Open the email composer modal
-    openEmailComposer(inquiryId, nonce);
+    openEmailComposer(inquiryId, nonce, emailBody);
   });
 
-  function openEmailComposer(inquiryId, nonce) {
+  function openEmailComposer(inquiryId, nonce, emailBody) {
     // Here we would make an AJAX call to the PHP function handling email composition
 
     $.ajax({
       url: ajaxurl,
       type: "POST",
       data: {
-        action: "get_inquiry_details",
+        action: "compose_email",
         nonce: nonce,
         inquiry_id: inquiryId,
+        email_body: emailBody,
       },
       success: function (response) {
         if (response.success) {

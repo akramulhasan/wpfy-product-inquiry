@@ -59,7 +59,8 @@ if (!class_exists('wpfyAdminMenu')) {
                 <div class="email-composer-section">
                     <h2>Email Composer</h2>
                     <form method="post" action="">
-                        <?php wp_nonce_field('compose_email_nonce', 'compose_email_nonce'); ?>
+                        <?php //wp_nonce_field('compose_email_nonce', 'compose_email_nonce'); 
+                        ?>
                         <label for="email_body">Email Body:</label>
                         <?php
                         $settings = array(
@@ -68,7 +69,7 @@ if (!class_exists('wpfyAdminMenu')) {
                         );
                         wp_editor('', 'email_body', $settings);
                         ?>
-                        <input type="submit" class="button email-submit" data-inquiry-id="<?php echo $inquiryDetails->ID; ?>" value="Send Email">
+                        <input type="submit" class="button email-submit" data-nonce="<?php echo wp_create_nonce('compose_email_nonce'); ?>" data-inquiry-id="<?php echo $inquiryDetails->ID; ?>" value="Send Email">
                     </form>
                 </div>
             </div>

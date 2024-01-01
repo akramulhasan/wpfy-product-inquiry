@@ -19,6 +19,12 @@ if (!class_exists('wpfyAdminSettingsPages')) {
 
             add_action('wp_ajax_get_inquiry_details', array($this, 'get_inquiry_details'));
             add_action('wp_ajax_nopriv_get_inquiry_details', array($this, 'get_inquiry_details'));
+
+
+            // Add AJAX action hooks for compose_email
+
+            add_action('wp_ajax_compose_email', array($this, 'compose_email'));
+            add_action('wp_ajax_nopriv_compose_email', array($this, 'compose_email'));
         }
 
         public function send_email_reply()
@@ -348,23 +354,38 @@ if (!class_exists('wpfyAdminSettingsPages')) {
         public function compose_email()
         {
             // Verify nonce for security
-            // if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'compose_email_nonce')) {
-            //     wp_send_json_error('Invalid nonce');
-            // }
-            error_log('AJAX request received.');
+            if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'compose_email_nonce')) {
+                wp_send_json_error('Invalid nonce');
+            }
+
             $inquiryId = isset($_POST['inquiry_id']) ? absint($_POST['inquiry_id']) : 0;
 
-            // You can customize the HTML structure based on your email composition needs
-            // $html = '<div class="email-composer-content">';
-            // $html .= '<label for="email-body">Email Body:</label>';
-            // $html .= '<textarea id="email-body" name="email_body" rows="5"></textarea>';
-            // $html .= '<button class="submit-email-button">Submit</button>';
-            // $html .= '</div>';
+            // Retrieve the content of the wp_editor
+            $emailBody = isset($_POST['email_body']) ? sanitize_text_field($_POST['email_body']) : '';
 
-            wp_send_json_success(array('details_url' => 'just-for-test'));
-            // wp_send_json_error('Error opening email composer from callback php file');
+            // Get the email address of the user who submitted the inquiry
+            $userEmail = get_post_meta($inquiryId, 'wpfypi_email', true);
+
+            // Prepare email subject
+            $subject = 'Reply to Your Inquiry';
+            $headers = array('From: Me Myself <dev-email@wpengine.local>');
+            // Send the email using wp_mail()
+            $sent = wp_mail($userEmail, $subject, $emailBody, $headers);
+            $siteTitle = get_bloginfo();
+
+            // Check if the email was sent successfully
+            if ($sent) {
+                // Send success response back to the Ajax call
+                wp_send_json_success(array('message' => 'Email sent successfully'));
+            } else {
+                // Send error response back to the Ajax call
+                wp_send_json_error('Error sending email');
+            }
+
+            // wp_send_json_success(array('details_url' => $emailBody, 'id' => $inquiryId, 'email' => $userEmail, 'siteName' => $siteTitle));
 
             wp_die();
-        }
+        } // End compose_email()
+
     }
 }
