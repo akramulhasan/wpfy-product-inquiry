@@ -46,9 +46,9 @@ jQuery(document).ready(function ($) {
     var nonce = $(this).data("nonce");
 
     // Retrieve the content of the wp_editor
-    //var emailBody = tinyMCE.get("email_body").getContent(); // Use tinyMCE to get content
+    //var emailBody = tinyMCE.get("email_body").getContent(); // This is not working, giving Uncaught Type error
 
-    var emailBody = "This is the content of the email body";
+    var emailBody = "I want to store wp_editor content here";
 
     // Open the email composer modal
     openEmailComposer(inquiryId, nonce, emailBody);
