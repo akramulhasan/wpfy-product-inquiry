@@ -46,17 +46,23 @@ jQuery(document).ready(function ($) {
     var nonce = $(this).data("nonce");
 
     // Retrieve the content of the wp_editor
-    //var emailBody = tinyMCE.get("email_body").getContent(); // This is not working, giving Uncaught Type error
-
-    var emailBody = "I want to store wp_editor content here";
+    var emailBody;
+    if (
+      typeof tinyMCE !== "undefined" &&
+      tinyMCE.get("email_body") &&
+      !tinyMCE.get("email_body").isHidden()
+    ) {
+      emailBody = tinyMCE.get("email_body").getContent();
+    } else {
+      emailBody = $("#email_body").val();
+    }
 
     // Open the email composer modal
     openEmailComposer(inquiryId, nonce, emailBody);
   });
 
   function openEmailComposer(inquiryId, nonce, emailBody) {
-    // Here we would make an AJAX call to the PHP function handling email composition
-
+    // AJAX call to the PHP function handling email composition
     $.ajax({
       url: ajaxurl,
       type: "POST",
@@ -68,15 +74,13 @@ jQuery(document).ready(function ($) {
       },
       success: function (response) {
         if (response.success) {
-          // Populate the details div with the response
-          // $("#email-composer").html(response.data).show();
           console.log(response);
         } else {
           alert("Error opening email composer.");
         }
       },
       error: function () {
-        alert("Error opening email composerrrrrrrrr.");
+        alert("Error opening email composer.");
       },
     });
   }

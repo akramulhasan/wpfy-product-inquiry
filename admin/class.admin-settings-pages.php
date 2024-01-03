@@ -370,7 +370,7 @@ if (!class_exists('wpfyAdminSettingsPages')) {
             $subject = 'Reply to Your Inquiry';
             $headers = array('From: Me Myself <dev-email@wpengine.local>');
             // Send the email using wp_mail()
-            $sent = wp_mail($userEmail, $subject, 'I am fixed', $headers);
+            $sent = wp_mail($userEmail, $subject, $emailBody, $headers);
             $siteTitle = get_bloginfo();
 
             // Check if the email was sent successfully
