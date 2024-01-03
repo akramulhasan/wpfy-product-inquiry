@@ -368,7 +368,7 @@ if (!class_exists('wpfyAdminSettingsPages')) {
 
             // Prepare email subject
             $subject = 'Reply to Your Inquiry';
-            $headers = array('From: Me Myself <dev-email@wpengine.local>');
+            $headers = array('From: Me Myself <dev-email@wpengine.local>', 'Content-Type: text/html; charset=UTF-8');
             // Send the email using wp_mail()
             $sent = wp_mail($userEmail, $subject, $emailBody, $headers);
             $siteTitle = get_bloginfo();
