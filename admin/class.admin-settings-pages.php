@@ -385,7 +385,7 @@ if (!class_exists('wpfyAdminSettingsPages')) {
             // wp_send_json_success(array('details_url' => $emailBody, 'id' => $inquiryId, 'email' => $userEmail, 'siteName' => $siteTitle));
 
             wp_die();
-        } // End compose_email()
+        } // End compose_email().
 
     }
 }
