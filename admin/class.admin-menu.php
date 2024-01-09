@@ -59,7 +59,7 @@ if (!class_exists('wpfyAdminMenu')) {
 
                 <div class="email-composer-section">
                     <h2>Email Composer</h2>
-                    <form method="post" action="">
+                    <form id="email-composer" method="post" action="">
                         <?php //wp_nonce_field('compose_email_nonce', 'compose_email_nonce'); 
                         ?>
                         <label for="email_body">Email Body:</label>

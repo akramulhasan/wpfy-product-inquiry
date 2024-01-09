@@ -57,9 +57,16 @@ jQuery(document).ready(function ($) {
       emailBody = $("#email_body").val();
     }
 
+    //resetFormFields
+    resetFormFields();
+
     // Open the email composer modal
     openEmailComposer(inquiryId, nonce, emailBody);
   });
+
+  function resetFormFields() {
+    jQuery("#email-composer")[0].reset();
+  }
 
   function openEmailComposer(inquiryId, nonce, emailBody) {
     // AJAX call to the PHP function handling email composition
