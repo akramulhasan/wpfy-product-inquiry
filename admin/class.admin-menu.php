@@ -51,6 +51,7 @@ if (!class_exists('wpfyAdminMenu')) {
                 <div class="inquiry-details">
                     <p><strong>Name:</strong> <?php echo esc_html($inquiryDetails->post_title); ?></p>
                     <p><strong>Email:</strong> <?php echo esc_html(get_post_meta($inquiryDetails->ID, 'wpfypi_email', true)); ?></p>
+                    <p><strong>Message:</strong> <?php echo esc_html($inquiryDetails->post_content); ?></p>
                     <p><strong>Product:</strong> <?php echo esc_html(get_post_meta($inquiryDetails->ID, 'wpfypi_product_name', true)); ?></p>
 
                     <button class="button send-email-reply">Send Email Reply</button>
