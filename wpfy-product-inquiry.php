@@ -1,4 +1,5 @@
 <?php
+
 /**
  ** WPFY Product Inquiry
  *
@@ -25,18 +26,20 @@ if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly.
 }
 
-class WPFY_Product_Inquiry {
+class WPFY_Product_Inquiry
+{
 
     /**
      * Class constructor.
      */
-    public function __construct() {
+    public function __construct()
+    {
 
         /**
          * Check if WooCommerce is active
          */
         if ($this->is_woocommerce_active()) {
-            
+
             /**
              * Call Constants method
              */
@@ -44,15 +47,15 @@ class WPFY_Product_Inquiry {
 
 
             // Proceed with the activation
-            register_activation_hook( __FILE__, array( 'WPFY_Product_Inquiry', 'activate' ) );
-            register_deactivation_hook( __FILE__, array( 'WPFY_Product_Inquiry', 'deactivate' ) );
-            register_uninstall_hook( __FILE__, array( 'WPFY_Product_Inquiry', 'uninstall' ) );
+            register_activation_hook(__FILE__, array('WPFY_Product_Inquiry', 'activate'));
+            register_deactivation_hook(__FILE__, array('WPFY_Product_Inquiry', 'deactivate'));
+            register_uninstall_hook(__FILE__, array('WPFY_Product_Inquiry', 'uninstall'));
 
             /**
              * Declare compatible with HPOS new order table 
              */
 
-             add_action('before_woocommerce_init', array($this, 'hpos_compatibility'));
+            add_action('before_woocommerce_init', array($this, 'hpos_compatibility'));
 
 
             //Include the wpfyInnquiryForm Class and instantiate
@@ -74,12 +77,15 @@ class WPFY_Product_Inquiry {
             //Include the wpfyAdminSettingsPages Class and instantiate
             require_once(WPFY_PY_PATH . '/admin/class.admin-settings-pages.php');
             $wpfy_admin_settings_pages = new wpfyAdminSettingsPages();
-            
 
+
+            //Include the wpfyAdminWooOption Class and instantiate
+            require_once(WPFY_PY_PATH . '/admin/class.admin-woo-option.php');
+            $wpfy_admin_woo_option = new wpfyAdminWooOption();
         } else {
             // Display a notice if WooCommerce is not active
             add_action('admin_notices', array($this, 'woocommerce_not_active_notice'));
-           
+
             // Deactivate the plugin
             add_action('admin_init', array($this, 'deactivate_plugin'));
         }
@@ -88,35 +94,39 @@ class WPFY_Product_Inquiry {
     /**
      * Check if WooCommerce is active
      */
-    private function is_woocommerce_active() {
+    private function is_woocommerce_active()
+    {
         return in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_option('active_plugins')));
     }
 
 
     /**
-    * Call Constants method
-    */
-    function define_constants(){
-        define( 'WPFY_PY_PATH', plugin_dir_path( __FILE__ ) );
-        define( 'WPFY_PY_URL', plugin_dir_url( __FILE__ ) );
-        define( 'WPFY_PY_VERSION', '1.0.0' );
+     * Call Constants method
+     */
+    function define_constants()
+    {
+        define('WPFY_PY_PATH', plugin_dir_path(__FILE__));
+        define('WPFY_PY_URL', plugin_dir_url(__FILE__));
+        define('WPFY_PY_VERSION', '1.0.0');
     }
 
     /**
      * Display notice if WooCommerce is not active
      */
-    public function woocommerce_not_active_notice() {
-        ?>
+    public function woocommerce_not_active_notice()
+    {
+?>
         <div class="notice notice-error is-dismissible">
             <p><?php _e('WPFY Product Inquiry requires WooCommerce to be active. Please activate WooCommerce to use this plugin.', 'wpfypi'); ?></p>
         </div>
-        <?php
+<?php
     }
 
     /**
      * Deactivate the plugin
      */
-    public function deactivate_plugin() {
+    public function deactivate_plugin()
+    {
         deactivate_plugins(plugin_basename(__FILE__));
         return;
     }
@@ -124,33 +134,36 @@ class WPFY_Product_Inquiry {
     /**
      * Declare compatible with HPOS new order table 
      */
-    public function hpos_compatibility() {
-        if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
-            \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
+    public function hpos_compatibility()
+    {
+        if (class_exists(\Automattic\WooCommerce\Utilities\FeaturesUtil::class)) {
+            \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility('custom_order_tables', __FILE__, true);
         }
     }
 
     /**
      * Static methods for Activate, Deactivate, Uninstall
      */
-    public static function activate(){
+    public static function activate()
+    {
         update_option('rewrite_rules', '');
     }
 
-    public static function deactivate(){
+    public static function deactivate()
+    {
         flush_rewrite_rules();
     }
-    
-    public static function uninstall(){
 
+    public static function uninstall()
+    {
     }
 }
 
 /**
-* Instantiate the plugin class.
-*/
+ * Instantiate the plugin class.
+ */
 
-if( class_exists( 'WPFY_Product_Inquiry' ) ){
+if (class_exists('WPFY_Product_Inquiry')) {
 
     $wpfy_slider = new WPFY_Product_Inquiry();
 }
