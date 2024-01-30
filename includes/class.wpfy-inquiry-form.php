@@ -41,7 +41,7 @@ if (!class_exists('wpfyInquiryForm')) {
                 // Display the button
                 echo '<button id="wpfy-inquiry-button">' . esc_html__('Inquiry', 'wpfypi') . '</button>';
 
-                // Include the inquiry form template
+                // Include the inquiry form template.
                 include(WPFY_PY_PATH . 'templates/inquiry-form.php');
             }
         }
