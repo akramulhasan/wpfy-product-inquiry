@@ -29,10 +29,20 @@ if (!class_exists('wpfyInquiryForm')) {
          */
         public function add_inquiry_button()
         {
-            echo '<button id="wpfy-inquiry-button">' . esc_html__('Inquiry', 'wpfypi') . '</button>';
+            // Get the current product ID
+            $product_id = get_the_ID();
 
-            // Include the inquiry form template
-            include(WPFY_PY_PATH . 'templates/inquiry-form.php');
+            // Get the saved value from wp-postmeta
+            $enable_inquiry = get_post_meta($product_id, '_inquiry_option_checkbox', true);
+
+            // Check if the checkbox is checked from the Product editor
+            if ($enable_inquiry === 'yes') {
+                // Display the button
+                echo '<button id="wpfy-inquiry-button">' . esc_html__('Inquiry', 'wpfypi') . '</button>';
+
+                // Include the inquiry form template
+                include(WPFY_PY_PATH . 'templates/inquiry-form.php');
+            }
         }
 
 
