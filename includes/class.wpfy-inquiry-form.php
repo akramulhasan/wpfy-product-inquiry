@@ -26,6 +26,7 @@ if (!class_exists('wpfyInquiryForm')) {
 
         /**
          * Add Inquiry Button Method
+         * 
          */
         public function add_inquiry_button()
         {
